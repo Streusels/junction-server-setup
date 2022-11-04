@@ -1,0 +1,3 @@
+junction.wimbes.de {
+    reverse_proxy pgadmin:80
+}

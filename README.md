@@ -1,0 +1,58 @@
+# Server Setup
+
+### Install Docker
+Install required packages:
+```bash
+sudo apt-get update
+sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+```
+
+Add Docker GPG key:
+```bash
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+```
+
+Add Docker Repository:
+```bash
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  sudo apt update
+```
+
+Install Docker and Docker Compose:
+```bash
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+```
+
+Add alias for easier usage to `~/.bashrc`:
+```bash
+alias compose="docker compose"
+```
+
+Make Docker start on boot:
+```bash
+sudo systemctl enable docker.service && \
+sudo systemctl enable containerd.service
+```
+
+Manage Docker as a non-root user:
+```bash
+sudo groupadd docker; \
+sudo usermod -aG docker $USER && \
+newgrp docker
+```
+Verify by running:
+```bash
+docker run hello-world
+```
+
+
+
+### Install `osm2pgsqgl`
+`sudo apt install osm2pgsql`
