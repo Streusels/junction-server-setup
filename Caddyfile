@@ -1,3 +1,26 @@
 junction.wimbes.de {
-    reverse_proxy pgadmin:80
+}
+
+world.junction.wimbes.de {
+    reverse_proxy world:80
+}
+
+eu.junction.wimbes.de {
+    reverse_proxy europe:80
+}
+
+fi.junction.wimbes.de {
+    reverse_proxy finland:80
+}
+
+de.junction.wimbes.de {
+    reverse_proxy germany:80
+}
+
+nl.junction.wimbes.de {
+    reverse_proxy netherlands:80
+}
+
+sg.junction.wimbes.de {
+    reverse_proxy singapore:80
 }

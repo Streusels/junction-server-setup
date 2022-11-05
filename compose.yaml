@@ -1,14 +1,9 @@
 networks:
-    proxy:
-        driver: bridge
-        ipam:
-            config:
-                - subnet: 172.20.0.0/16
-    db:
-        driver: bridge
-        ipam:
-            config:
-                - subnet: 172.30.0.0/16
+  proxy:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
 
 
 
@@ -27,31 +22,105 @@ services:
       - './caddy/Caddyfile:/etc/caddy/Caddyfile:ro'
       - './caddy/data/:/data/'
       - './caddy/config/:/config/'
-  
-  pg:
-    container_name: postgres
-    image: postgis/postgis
-    restart: unless-stopped
-    networks:
-      db:
-        ipv4_address: 172.30.0.10
-    volumes:
-      - './postgres/data/:/var/lib/postgresql/data/'
-    environment:
-      POSTGRES_USER: 'Streusels'
-      POSTGRES_PASSWORD: 'Mcytzhj@3jN95E$4%qAk4eHH9$4Ta#7e2WuattHB9MVosxDHgf'
-      PGDATA: '/var/lib/postgresql/data/pgdata/'
 
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4
+  world:
+    container_name: world
+    image: wiktorn/overpass-api
     restart: unless-stopped
     networks:
-      db:
-        ipv4_address: 172.30.0.20
       proxy:
         ipv4_address: 172.20.0.20
+    volumes:
+      - './overpass/word/:/db/'
     environment:
-      PGADMIN_DEFAULT_EMAIL: 'le.wimbes@gmail.com'
-      PGADMIN_DEFAULT_PASSWORD: 'Mcytzhj@3jN95E$4%qAk4eHH9$4Ta#7e2WuattHB9MVosxDHgf'
-      PGDATA: '/var/lib/postgresql/data/pgdata/'
+      OVERPASS_MODE: init
+      OVERPASS_META: yes
+      OVERPASS_PLANET_URL: https://planet.openstreetmap.org/planet/planet-latest.osm.bz2
+      OVERPASS_DIFF_URL: https://planet.openstreetmap.org/replication/minute/
+      OVERPASS_COMPRESSION: gz
+      OVERPASS_RULES_LOAD: 100
+
+  europe:
+    container_name: europe
+    image: wiktorn/overpass-api
+    restart: unless-stopped
+    networks:
+      proxy:
+        ipv4_address: 172.20.0.30
+    volumes:
+      - './overpass/europe/:/db/'
+    environment:
+      OVERPASS_MODE: init
+      OVERPASS_META: yes
+      OVERPASS_PLANET_URL: https://download.geofabrik.de/europe-latest.osm.bz2
+      OVERPASS_DIFF_URL: https://download.geofabrik.de/europe-updates/
+      OVERPASS_COMPRESSION: gz
+      OVERPASS_RULES_LOAD: 100
+
+  finland:
+    container_name: finland
+    image: wiktorn/overpass-api
+    restart: unless-stopped
+    networks:
+      proxy:
+        ipv4_address: 172.20.0.40
+    volumes:
+      - './overpass/finland/:/db/'
+    environment:
+      OVERPASS_MODE: init
+      OVERPASS_META: yes
+      OVERPASS_PLANET_URL: https://download.geofabrik.de/europe/finland-latest.osm.bz2
+      OVERPASS_DIFF_URL: https://download.geofabrik.de/europe/finland-updates/
+      OVERPASS_COMPRESSION: gz
+      OVERPASS_RULES_LOAD: 100
+
+  germany:
+    container_name: germany
+    image: wiktorn/overpass-api
+    restart: unless-stopped
+    networks:
+      proxy:
+        ipv4_address: 172.20.0.50
+    volumes:
+      - './overpass/germany/:/db/'
+    environment:
+      OVERPASS_MODE: init
+      OVERPASS_META: yes
+      OVERPASS_PLANET_URL: https://download.geofabrik.de/europe/germany-latest.osm.bz2
+      OVERPASS_DIFF_URL: https://download.geofabrik.de/europe/germany-updates/
+      OVERPASS_COMPRESSION: gz
+      OVERPASS_RULES_LOAD: 100
+
+  netherlands:
+    container_name: netherlands
+    image: wiktorn/overpass-api
+    restart: unless-stopped
+    networks:
+      proxy:
+        ipv4_address: 172.20.0.70
+    volumes:
+      - './overpass/netherlands/:/db/'
+    environment:
+      OVERPASS_MODE: init
+      OVERPASS_META: yes
+      OVERPASS_PLANET_URL: https://download.geofabrik.de/europe/netherlands-latest.osm.bz2
+      OVERPASS_DIFF_URL: https://download.geofabrik.de/europe/netherlands-updates/
+      OVERPASS_COMPRESSION: gz
+      OVERPASS_RULES_LOAD: 100
+
+  singapore:
+    container_name: singapore
+    image: wiktorn/overpass-api
+    restart: unless-stopped
+    networks:
+      proxy:
+        ipv4_address: 172.20.0.80
+    volumes:
+      - './overpass/singapore/:/db/'
+    environment:
+      OVERPASS_MODE: init
+      OVERPASS_META: yes
+      OVERPASS_PLANET_URL: https://download.geofabrik.de/asia/malaysia-singapore-brunei-latest.osm.bz2
+      OVERPASS_DIFF_URL: https://download.geofabrik.de/asia/malaysia-singapore-brunei-updates/
+      OVERPASS_COMPRESSION: gz
+      OVERPASS_RULES_LOAD: 100
