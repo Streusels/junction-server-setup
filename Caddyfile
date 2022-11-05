@@ -1,12 +1,16 @@
 junction.wimbes.de {
 }
 
-world.junction.wimbes.de {
-    reverse_proxy world:80
+car.fi.junction.wimbes.de {
+    reverse_proxy car_fi:5000
 }
 
-eu.junction.wimbes.de {
-    reverse_proxy europe:80
+bike.fi.junction.wimbes.de {
+    reverse_proxy bike_fi:5000
+}
+
+foot.fi.junction.wimbes.de {
+    reverse_proxy foot_fi:5000
 }
 
 fi.junction.wimbes.de {

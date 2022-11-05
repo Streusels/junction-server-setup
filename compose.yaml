@@ -23,39 +23,41 @@ services:
       - './caddy/data/:/data/'
       - './caddy/config/:/config/'
 
-  world:
-    container_name: world
-    image: wiktorn/overpass-api
+  car_fi:
+    container_name: car_fi
+    image: my_car_fi
     restart: unless-stopped
+    build:
+      context: .
+      dockerfile: car.fi.dockerfile
     networks:
       proxy:
-        ipv4_address: 172.20.0.20
-    volumes:
-      - './overpass/word/:/db/'
-    environment:
-      OVERPASS_MODE: init
-      OVERPASS_META: yes
-      OVERPASS_PLANET_URL: https://planet.openstreetmap.org/planet/planet-latest.osm.bz2
-      OVERPASS_DIFF_URL: https://planet.openstreetmap.org/replication/minute/
-      OVERPASS_COMPRESSION: gz
-      OVERPASS_RULES_LOAD: 100
+        ipv4_address: 172.20.0.100
+    command: bash -c "osrm-routed --algorithm mld finland-latest.osrm"
 
-  europe:
-    container_name: europe
-    image: wiktorn/overpass-api
+  bike_fi:
+    container_name: bike_fi
+    image: my_bike_fi
     restart: unless-stopped
+    build:
+      context: .
+      dockerfile: bike.fi.dockerfile
     networks:
       proxy:
-        ipv4_address: 172.20.0.30
-    volumes:
-      - './overpass/europe/:/db/'
-    environment:
-      OVERPASS_MODE: init
-      OVERPASS_META: yes
-      OVERPASS_PLANET_URL: https://download.geofabrik.de/europe-latest.osm.bz2
-      OVERPASS_DIFF_URL: https://download.geofabrik.de/europe-updates/
-      OVERPASS_COMPRESSION: gz
-      OVERPASS_RULES_LOAD: 100
+        ipv4_address: 172.20.0.101
+    command: bash -c "osrm-routed --algorithm mld finland-latest.osrm"
+
+  foot_fi:
+    container_name: foot_fi
+    image: my_foot_fi
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: foot.fi.dockerfile
+    networks:
+      proxy:
+        ipv4_address: 172.20.0.102
+    command: bash -c "osrm-routed --algorithm mld finland-latest.osrm"
 
   finland:
     container_name: finland

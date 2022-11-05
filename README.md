@@ -51,26 +51,3 @@ Verify by running:
 ```bash
 docker run hello-world
 ```
-
-
-
-### Install `osm2pgsqgl`
-`sudo apt install osm2pgsql`
-
-
-### Create Database from OSM data
-Create Database for OSM:
-```sql
-CREATE DATABASE finland WITH ENCODING=UTF8;
-```
-
-Add Extension:
-```sql
-CREATE EXTENSION postgis;
-CREATE EXTENSION hstore;
-```
-
-Import OSM data:
-```bash
-osm2pgsql -d <DATABASE> -U <USERNAME> -W -H 127.0.0.1 -P 5433 -S flex.lua -O flex -c <OSMFILE>
-```
